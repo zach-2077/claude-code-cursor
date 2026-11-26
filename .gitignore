@@ -2,3 +2,16 @@ node_modules/
 dist/
 .DS_Store
 *.log
+
+# Never commit keys, credentials, or local config snapshots
+.env
+.env.*
+auth.json
+*credentials*.json
+*secret*
+*.pem
+*.key
+*.bak*
+settings*.json
+profiles/
+.claude-code-cursor/
