@@ -1,0 +1,35 @@
+# claude-code-cursor (ccc)
+
+> Open-source local Anthropic Messages API (`/v1/messages`) proxy that lets developers run Anthropic's **Claude Code CLI (`claude`)** powered by models from a **Cursor Pro, Business, or Enterprise subscription** over HTTP/2 Connect-RPC — preserving 100% of Claude Code's native tool approvals, diff previews, MCP servers, hooks, skills, subagents, extended thinking (`/effort`), and Max Mode (`500k` / `1M` context windows).
+
+- Repository: https://github.com/zach-2077/claude-code-cursor
+- License: BSD-3-Clause
+- Runtime: Bun >= 1.2 / TypeScript ESM
+- Primary CLI binary: `ccc` (`claude-code-cursor`)
+
+## Problem Solved
+
+1. **Use Cursor Subscription Models in Claude Code**: Route `ANTHROPIC_BASE_URL` from Claude Code to a localhost gateway (`127.0.0.1:32125`) backed by Cursor's live model catalog (`composer-2.5`, `grok-4.7`, `gemini-4-carbon`, `gemini-4-neon`, `gemini-3.8-flash`, `kimi-k3`, etc.).
+2. **Works When `cursor-agent --print` Is Disabled**: Uses Cursor's native HTTP/2 Connect-RPC agent protocol instead of spawning headless `cursor-agent --print` CLI subprocesses, so it works on enterprise Cursor accounts where administrators disable headless CLI execution (`Your team administrator has disabled headless Cursor CLI usage`).
+3. **100% Safe Harness Ownership**: Holds the Connect-RPC run continuation during tool calls so Cursor never mutates local files directly; Claude Code owns every `Bash`, `Read`, `Edit`, `Write`, `Grep`, `Glob`, `Agent`, `WebFetch`, `WebSearch`, and `mcp__*` tool call and permission prompt.
+
+## Key Capabilities
+
+- **Endpoints**: `POST /v1/messages` (streaming SSE & JSON), `POST /v1/messages/count_tokens`, `GET /v1/models`, `GET /health`.
+- **Zero-Key Auth Reuse**: Reads existing `cursor-agent login` credentials from macOS Keychain (`cursor-access-token` / `cursor-refresh-token`) or `~/.local/share/opencode/auth.json` with automatic JWT refresh, plus built-in PKCE browser login (`ccc login`).
+- **Bidirectional Tool Schema & Output Translation**:
+  - Maps Claude Code tools (`Bash`, `Read`, `Edit`, `Write`, `Grep`, `Glob`, `Agent`/`Task`, `TodoWrite`, `AskUserQuestion`, `WebFetch`, `WebSearch`, `Skill`, MCP) to canonical OpenCode/Cursor schemas and back to Anthropic `tool_use` SSE blocks.
+  - Strips Claude Code `Read` `1→` line-number prefixes and `<system-reminder>` trailers from `tool_result` payloads so `Edit` `old_string` patches remain exact.
+- **Dynamic Effort & Context Window Control**:
+  - Maps Claude Code `/effort` (`low`, `medium`, `high`, `xhigh`, `max`) and `thinking` budgets to Cursor reasoning variants.
+  - Unlocks Cursor Max Mode context windows (`grok-4.7-500k`, `gemini-4-neon-1m[1m]`, `gemini-4-carbon-1m[1m]`).
+
+## Documentation & Source Map
+
+- [English Documentation](./README.md): Architecture, quick start, daemon scripts, profile switcher, comparison table, and FAQ.
+- [Chinese Documentation (简体中文)](./README.zh-CN.md): Full Chinese guide.
+- [HTTP Server & Endpoints](./src/server.ts): Local `/v1/messages` Anthropic-compatible proxy server.
+- [Model Catalog & Variant Router](./src/models.ts): Dynamic Cursor model discovery, effort levels, and Max Mode context routing.
+- [Authentication](./src/auth.ts): macOS Keychain credential discovery, JWT renewal, and PKCE login.
+- [Tool & Stream Translation](./src/translate/tools.ts): Claude Code <-> Cursor tool schema and SSE stream translation.
+- [Daemon & Profile Scripts](./switch-claude-config.sh): Toggle `~/.claude/settings.json` between Cursor and original Anthropic/LiteLLM profiles.

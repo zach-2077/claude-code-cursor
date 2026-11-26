@@ -1,11 +1,39 @@
 {
   "name": "claude-code-cursor",
   "version": "0.1.0",
-  "description": "Use Cursor-provided models inside Claude Code via a local Anthropic /v1/messages proxy",
+  "description": "Use Cursor subscription models inside Claude Code CLI via a local Anthropic /v1/messages Connect-RPC proxy with full tool calling, thinking effort, and 1M Max Mode support",
   "license": "BSD-3-Clause",
+  "author": "Zach Zhou (https://github.com/zach-2077)",
+  "homepage": "https://github.com/zach-2077/claude-code-cursor#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zach-2077/claude-code-cursor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zach-2077/claude-code-cursor/issues"
+  },
+  "keywords": [
+    "claude-code",
+    "claude-cli",
+    "cursor",
+    "cursor-ai",
+    "cursor-agent",
+    "anthropic",
+    "anthropic-api",
+    "anthropic-proxy",
+    "v1-messages",
+    "llm-proxy",
+    "llm-gateway",
+    "connect-rpc",
+    "ai-coding",
+    "coding-agent",
+    "opencode-cursor",
+    "mcp",
+    "model-router"
+  ],
+  "engines": {
+    "bun": ">=1.2.0",
+    "node": ">=20.0.0"
   },
   "type": "module",
   "bin": {

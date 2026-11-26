@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use claude-code-cursor in your workflow or research, please cite it using the metadata below."
+title: "claude-code-cursor: Use Cursor Subscription Models Inside Claude Code CLI"
+type: software
+authors:
+  - family-names: Zhou
+    given-names: Zach
+    alias: zach-2077
+repository-code: "https://github.com/zach-2077/claude-code-cursor"
+url: "https://github.com/zach-2077/claude-code-cursor"
+license: BSD-3-Clause
+version: 0.1.0
+date-released: "2026-11-26"
+keywords:
+  - claude-code
+  - cursor
+  - anthropic-api
+  - llm-proxy
+  - connect-rpc
+  - coding-agent
+abstract: "A local Anthropic Messages API (/v1/messages) proxy that connects Anthropic's Claude Code CLI harness to Cursor subscription models over HTTP/2 Connect-RPC with full tool-use, thinking effort, and Max Mode context window support."
