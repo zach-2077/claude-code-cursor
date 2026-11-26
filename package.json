@@ -2,6 +2,11 @@
   "name": "claude-code-cursor",
   "version": "0.1.0",
   "description": "Use Cursor-provided models inside Claude Code via a local Anthropic /v1/messages proxy",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zach-2077/claude-code-cursor.git"
+  },
   "type": "module",
   "bin": {
     "claude-code-cursor": "./bin/ccc.mjs",
